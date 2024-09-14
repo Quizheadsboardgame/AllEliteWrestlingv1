@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Elite Wrestling Quiz</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #38B6FF; /* Background color */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #yellow-box {
+            width: 200px;
+            height: 200px;
+            background-color: #FED405; /* Yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            border: 5px solid black; /* Black edging */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Class to trigger the bounce animation */
+        .animate-bounce {
+            animation: bounce 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yellow-box">ALL ELITE WRESTLING</div>
+
+    <div id="question-answer"></div>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of AEW trivia questions and answers
+        const aewQuestions = [
+            { question: "Who was the first AEW World Champion?", answer: "Chris Jericho" },
+            { question: "Which wrestling tag team is known as The Young Bucks?", answer: "Matt and Nick Jackson" },
+            { question: "What year did AEW hold its first event, 'Double or Nothing'?", answer: "2019" },
+            { question: "Who is the owner and president of All Elite Wrestling?", answer: "Tony Khan" },
+            { question: "Who was the inaugural AEW TNT Champion?", answer: "Cody Rhodes" },
+            { question: "Which AEW star is known as 'The Best Bout Machine'?", answer: "Kenny Omega" },
+            { question: "What is the name of AEW’s weekly show on TNT?", answer: "Dynamite" },
+            { question: "Which AEW wrestler is known as 'The Painmaker'?", answer: "Chris Jericho" },
+            { question: "Who is the first female AEW Women's World Champion?", answer: "Riho" },
+            { question: "Which AEW wrestler is known for using the finisher 'Paradigm Shift'?", answer: "Jon Moxley" },
+            { question: "What faction does Cody Rhodes belong to?", answer: "The Nightmare Family" },
+            { question: "Which AEW tag team is known as FTR?", answer: "Dax Harwood and Cash Wheeler" },
+            { question: "Who won the first Casino Battle Royale in AEW?", answer: "Hangman Adam Page" },
+            { question: "What is the name of AEW’s signature annual pay-per-view event?", answer: "Double or Nothing" },
+            { question: "Which AEW wrestler is known as 'The American Nightmare'?", answer: "Cody Rhodes" },
+            { question: "Who did Jon Moxley defeat to win the AEW World Championship?", answer: "Chris Jericho" },
+            { question: "Which wrestler is known as 'Le Champion' in AEW?", answer: "Chris Jericho" },
+            { question: "What is Kenny Omega’s finishing move?", answer: "One-Winged Angel" },
+            { question: "Which AEW faction includes Chris Jericho, Sammy Guevara, and Jake Hager?", answer: "The Inner Circle" },
+            { question: "What is Darby Allin’s signature wrestling move?", answer: "Coffin Drop" },
+            { question: "Which wrestling legend made his surprise debut in AEW in December 2020?", answer: "Sting" },
+            { question: "What AEW star is known as 'Freshly Squeezed'?", answer: "Orange Cassidy" },
+            { question: "Which AEW pay-per-view event is held in Chicago?", answer: "All Out" },
+            { question: "Who won the AEW Tag Team Championship at 'Revolution' 2020?", answer: "Kenny Omega and Hangman Adam Page" },
+            { question: "What is the name of AEW’s development program for up-and-coming talent?", answer: "AEW Dark" },
+            { question: "Which AEW star is known as 'The Bastard'?", answer: "PAC" },
+            { question: "Which AEW wrestler is married to Brandi Rhodes?", answer: "Cody Rhodes" },
+            { question: "Who did Kenny Omega defeat to win his first AEW World Championship?", answer: "Jon Moxley" },
+            { question: "Which AEW wrestler’s entrance music is 'Judas'?", answer: "Chris Jericho" },
+            { question: "What faction do The Young Bucks and Kenny Omega belong to?", answer: "The Elite" },
+            { question: "Who is known as 'The Exalted One' in The Dark Order?", answer: "Brodie Lee" },
+            { question: "Which AEW star won the first ever Casino Ladder Match?", answer: "Brian Cage" },
+            { question: "What is AEW's women's division battle royal called?", answer: "Casino Battle Royale" },
+            { question: "Which AEW wrestler used to compete in WWE under the name Dean Ambrose?", answer: "Jon Moxley" },
+            { question: "What is MJF’s full wrestling name?", answer: "Maxwell Jacob Friedman" },
+            { question: "Which AEW star is known as 'The Spanish God'?", answer: "Sammy Guevara" },
+            { question: "Who did Hikaru Shida defeat to win the AEW Women's Championship?", answer: "Nyla Rose" },
+            { question: "Which AEW event was the first to feature the Stadium Stampede match?", answer: "Double or Nothing 2020" },
+            { question: "Who won the first AEW Women’s Casino Battle Royale?", answer: "Nyla Rose" },
+            { question: "Which AEW faction did Brodie Lee lead?", answer: "The Dark Order" },
+            { question: "Who is the AEW wrestler with the nickname 'The Murderhawk Monster'?", answer: "Lance Archer" },
+            { question: "Which AEW star won the TNT Championship in a dog collar match?", answer: "Brodie Lee" },
+            { question: "Which AEW wrestler has the finisher 'Dead Eye'?", answer: "Hangman Adam Page" },
+            { question: "Which AEW faction was formed by Kenny Omega, Adam Cole, and The Young Bucks?", answer: "The Elite" },
+            { question: "Who won the AEW World Championship at Full Gear 2021?", answer: "Hangman Adam Page" },
+            { question: "Which AEW wrestler is known for his mic skills and his catchphrase 'Better Than You'? ", answer: "MJF" },
+            { question: "Which AEW star was the first to win the AEW World Tag Team Championship twice?", answer: "Kenny Omega" },
+            { question: "Who was the first AEW wrestler to hold the TNT Championship?", answer: "Cody Rhodes" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...aewQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Animate the yellow box when clicked
+        yellowBox.addEventListener("click", () => {
+            yellowBox.classList.add("animate-bounce");
+            setTimeout(() => {
+                yellowBox.classList.remove("animate-bounce");
+            }, 300);
+
+            questionIndex = (questionIndex + 1) % shuffledQuestions.length;
+            displayQuestion();
+        });
+
+        // Initialize questions on page load
+        window.onload = initializeQuestions;
+    </script>
+
+</body>
+</html>
